@@ -1,4 +1,4 @@
-.stage {
+/* .stage {
     display: flex;
     position: absolute;
     padding: 5vw;
@@ -8,24 +8,24 @@
 
     background-color: orange;
     border-radius: 0 0 3vw 3vw;
-}
+} */
 
-.active-card {
+/* .active-card {
     width: 20vw;
     height: 25vw;
     border: 3.5px dashed black;
-    border-radius: 2vw;
-}
+    border-radius: 3vw;
+} */
 
-.deck {
+/* .deck {
     display: flex;
     position: relative;
-}
+} */
 
-.stage-card {
+/* .stage-card {
     border: 3.5px solid black;
     width: 20vw;
     height: 25vw;
-    border-radius: 2vw;
+    border-radius: 3vw;
     position: absolute;
-}
+} */
