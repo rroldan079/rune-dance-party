@@ -12,7 +12,6 @@ export const useGame = (): GameState => {
             // Update data state on game state change
             onChange: (data) => {
                 setData(data);
-                console.log(data);
             },
         });
     }, []); // Run once on mount

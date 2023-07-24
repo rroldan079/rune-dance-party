@@ -6,7 +6,6 @@ declare global {
 export interface GameState {
     count: number;
     currentPlayerIndex?: number;
-    currentPlayerStartedAt?: number;
     timeElapsed?: number;
     cardStack: any;
     winner?: string | null;
@@ -43,7 +42,6 @@ export const generateCardStack = () => {
 const initialState: GameState = {
     count: 0,
     currentPlayerIndex: 0,
-    currentPlayerStartedAt: Rune.gameTimeInSeconds(),
     timeElapsed: 0,
     cardStack: generateCardStack(),
     winner: null,
@@ -75,7 +73,7 @@ Rune.initLogic({
         },
         setActiveCard: ({ game }) => {
             // Set the active card
-        }
+        },
     },
     events: {
         playerJoined: () => {
@@ -85,9 +83,8 @@ Rune.initLogic({
             // Handle player left
         },
     },
-    update: ({ game }) => {
-        
-        game.timeElapsed = Rune.gameTimeInSeconds();
-        /* Any code inside this function will run every 1 second and return to client */
-        
-    },  
+    // update: ({ game }) => {
+    //     game.timeElapsed = Rune.gameTimeInSeconds();
+    //     /* Any code inside this function will run every 1 second and return to client */
+    // },
+});
