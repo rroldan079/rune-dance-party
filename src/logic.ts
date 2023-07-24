@@ -9,7 +9,7 @@ export interface GameState {
     timeElapsed?: number;
     cardStack: any;
     winner?: string | null;
-    players: Player[];
+    players: any;
 }
 
 export interface Player {
@@ -23,6 +23,7 @@ type GameActions = {
     checkPoses: (params: { playerPoses: [] }) => void;
     updateCardStack: (params: { game: GameState }) => void;
     setActiveCard: (params: { game: GameState }) => void;
+    toggleLimb: (params: { limb: "left arm" | "right arm" | "left leg" | "right leg" }) => void;
 };
 
 export function getCount(game: GameState) {
@@ -39,33 +40,36 @@ export const generateCardStack = () => {
     return stack;
 };
 
-const initialState: GameState = {
-    count: 0,
-    currentPlayerIndex: 0,
-    timeElapsed: 0,
-    cardStack: generateCardStack(),
-    winner: null,
-    players: [
-        {
-            id: "1",
-            name: "Player 1",
-            score: 0,
-        },
-    ],
-};
-
 Rune.initLogic({
-    minPlayers: 1,
+    minPlayers: 4,
     maxPlayers: 4,
-    setup: (): GameState => {
-        return initialState; /* This functions returns the initial game state */
+    setup: (playerIds): GameState => {
+        return {
+            count: 0,
+            currentPlayerIndex: 0,
+            timeElapsed: 0,
+            cardStack: generateCardStack(),
+            winner: null,
+            players: playerIds.reduce(
+                (acc, playerId, index) => ({
+                    ...acc,
+                    [playerId]: {
+                        id: playerId,
+                        limbs: { "left arm": 1, "right arm": 1, "left leg": 1, "right leg": 1 },
+                        score: 0,
+                        displayName: `Player ${index + 1}`,
+                    },
+                }),
+                {}
+            ),
+        };
     },
     actions: {
+        /* AS A SECOND ARGUMENT, EACH ACTION GETS ACCESS TO AN OBJECT CONTAINING THE CURRENT GAME STATE, THE PLAYER ID OF THE PLAYER INITIATING THE ACTION, AND AN ARRAY OF ALL PLAYER IDS */
         increment: ({ amount }, { game }) => {
             game.count += amount;
         },
         checkPoses: ({ playerPoses }, { game }) => {
-            console.log(playerPoses);
             // Check if player poses are correct
         },
         updateCardStack: ({ game }) => {
@@ -73,6 +77,12 @@ Rune.initLogic({
         },
         setActiveCard: ({ game }) => {
             // Set the active card
+        },
+        toggleLimb: ({ limb }, { game, playerId: initiatingPlayerId }) => {
+            /* THIS ACTION TAKES A PAYLOAD OBJECT WITH THE LIMB TO BE TOGGLED. EACH LIMB HAS THREE STATES TO TOGGLE BETWEEN */
+            const currentPose = game.players[initiatingPlayerId].limbs[limb];
+            const newPose = (currentPose % 3) + 1;
+            game.players[initiatingPlayerId].limbs[limb] = newPose;
         },
     },
     events: {

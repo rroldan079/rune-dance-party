@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { GameState } from "../src/logic.ts";
+import { GameState } from "../logic.ts";
 
 // Custom hook to get game state
 export const useGame = (): GameState => {

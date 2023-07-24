@@ -6,19 +6,36 @@ type ControlsProps = {
 };
 
 export const Controls: React.FC<ControlsProps> = ({ game }) => {
+    const onClickHandler = (limb: any) => {
+        Rune.actions.toggleLimb({
+            limb: limb,
+        });
+    };
+
     return (
-        // <div className="grid w-11/12 h-full grid-cols-2 gap-4 p-4 border-8 border-black rounded-3xl place-items-center">
         <div className="flex h-32 bg-black border-8 border-black rounded-3xl overflow-clip ">
-            <button className="h-full font-black transition-all rounded-none hover:opacity-90 bg-black/20 bg-ronchi">
+            <button
+                className="h-full font-black transition-all rounded-none hover:opacity-90 bg-black/20 bg-ronchi"
+                onClick={() => onClickHandler("left arm")}
+            >
                 Left Arm
             </button>
-            <button className="h-full font-black transition-all rounded-none hover:opacity-90 bg-black/20 bg-willpower-orange">
+            <button
+                className="h-full font-black transition-all rounded-none hover:opacity-90 bg-black/20 bg-willpower-orange"
+                onClick={() => onClickHandler("right arm")}
+            >
                 Right Arm
             </button>
-            <button className="h-full font-black transition-all rounded-none hover:opacity-90 bg-black/20 bg-vivid-raspberry">
+            <button
+                className="h-full font-black transition-all rounded-none hover:opacity-90 bg-black/20 bg-vivid-raspberry"
+                onClick={() => onClickHandler("left leg")}
+            >
                 Left Leg
             </button>
-            <button className="h-full font-black transition-all rounded-none hover:opacity-90 bg-black/20 bg-blue-purple">
+            <button
+                className="h-full font-black transition-all rounded-none hover:opacity-90 bg-black/20 bg-blue-purple"
+                onClick={() => onClickHandler("right leg")}
+            >
                 Right Leg
             </button>
         </div>

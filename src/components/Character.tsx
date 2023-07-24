@@ -6,13 +6,28 @@ type CharacterProps = {
 
 type LimbProps = {
     type: "left arm" | "right arm" | "left leg" | "right leg";
+    limbPoses?: {
+        leftArm: number;
+        rightArm: number;
+        leftLeg: number;
+        rightLeg: number;
+    };
+    player?: any;
 };
 
-const Limb: React.FC<LimbProps> = ({ type }) => {
+type BodyProps = {
+    children: React.ReactElement<LimbProps>[] | React.ReactElement<LimbProps>;
+    player: any;
+};
+
+const Limb: React.FC<LimbProps> = ({ type, player }) => {
     let position;
+    console.log(player.limbs[type]);
+
     switch (type) {
         case "left arm":
             position = "left-0 top-0";
+
             break;
         case "right arm":
             position = "right-0 top-0";
@@ -27,30 +42,31 @@ const Limb: React.FC<LimbProps> = ({ type }) => {
             position = "left-0 top-0";
             break;
     }
-    return <div className={`absolute font-black ${position}`}>{type}</div>;
-};
-
-type BodyProps = {
-    children: React.ReactNode;
-    player: any;
+    return <div className={`absolute font-black text-xs ${position}`}>{player.limbs[type]}</div>;
 };
 
 const Body: React.FC<BodyProps> = ({ children, player }) => {
     return (
-        <div className="relative flex items-center justify-center bg-black/20">
-            <img
+        <div className="relative flex items-center justify-center p-8 bg-black/20 rounded-3xl">
+            {/* <img
                 src={player.avatarUrl}
                 className="w-full"
-            />
-            {children}
+            /> */}
+            {React.Children.map(children, (child) => {
+                if (React.isValidElement(child)) {
+                    return React.cloneElement(child, { player: player });
+                }
+                return child;
+            })}
         </div>
     );
 };
 
 export const Character: React.FC<CharacterProps> = ({ player }) => {
     return (
-        <div className="w-full p-4 bg-black/10 rounded-3xl aspect-square">
-            <p>{player.displayName}</p>
+        <div className="flex flex-col items-center w-full p-4 bg-black/10 rounded-3xl aspect-square">
+            <span>{player.displayName}</span>
+
             <Body player={player}>
                 <Limb type="left arm" />
                 <Limb type="right arm" />
