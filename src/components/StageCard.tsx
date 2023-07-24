@@ -2,8 +2,8 @@ import React from "react";
 
 type StageCardProps = {
   cardType: string;
-  leftOffset: string;
-  z: string;
+  leftOffset?: string;
+  z?: string;
 };
 
 export const StageCard: React.FC<StageCardProps> = ({
