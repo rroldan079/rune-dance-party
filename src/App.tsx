@@ -1,23 +1,14 @@
-import { useEffect, useState } from "react";
 import reactLogo from "./assets/rune.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
-import { GameState } from "./logic.ts";
+import { useGame } from "../hooks/useGame.ts";
 
 function App() {
-    const [game, setGame] = useState<GameState>();
-    useEffect(() => {
-        Rune.initClient({
-            onChange: ({ newGame }) => {
-                setGame(newGame);
-            },
-        });
-    }, []);
+    const game = useGame(); /* This is the current game state */
 
     if (!game) {
         return <div>Loading...</div>;
     }
-
     return (
         <>
             <div>
@@ -45,6 +36,7 @@ function App() {
             <h1>Vite + Rune</h1>
             <div className="card">
                 <button onClick={() => Rune.actions.increment({ amount: 1 })}>count is {game.count}</button>
+                <button onClick={() => Rune.actions.updateCardStack()}>increment</button>
                 <p className="text-blue-700">
                     Edit <code>src/App.tsx</code> or <code>src/logic.ts</code> and save to test HMR
                 </p>
