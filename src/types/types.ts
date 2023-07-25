@@ -44,7 +44,7 @@ export interface GameState {
 }
 
 export type GameActions = {
-    updateCardStack: (params: { game: GameState }) => void;
+    updateCardStack: (params?: { payload: string }) => void;
     toggleLimb: (params: { limb: LimbEnum }) => void;
 };
 

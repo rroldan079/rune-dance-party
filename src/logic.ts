@@ -44,8 +44,9 @@ Rune.initLogic({
     },
     actions: {
         /* AS A SECOND ARGUMENT, EACH ACTION GETS ACCESS TO AN OBJECT CONTAINING THE CURRENT GAME STATE, THE PLAYER ID OF THE PLAYER INITIATING THE ACTION, AND AN ARRAY OF ALL PLAYER IDS */
-        updateCardStack: ({ game }) => {
+        updateCardStack: (_, { game }) => {
             /* A FUNCTION FOR REMOVING THE TOPMOST CARD FROM THE STACK */
+
             game.cardStack.shift();
         },
 
@@ -67,11 +68,11 @@ Rune.initLogic({
             // Handle player left
         },
     },
-    update: ({ game }) => {
-        /* THIS UPDATE FUNCTION RUNS EVERY 1 SECOND */
-        /* GAME OVER AFTER 60 SECONDS */
-        const timeElapsed = Rune.gameTimeInSeconds();
-        game.remainingTime = 60 - timeElapsed;
-        game.remainingTime === 0 && Rune.gameOver();
-    },
+    // update: ({ game }) => {
+    //     /* THIS UPDATE FUNCTION RUNS EVERY 1 SECOND */
+    //     /* GAME OVER AFTER 60 SECONDS */
+    //     const timeElapsed = Rune.gameTimeInSeconds();
+    //     game.remainingTime = 60 - timeElapsed;
+    //     game.remainingTime === 0 && Rune.gameOver();
+    // },
 });
