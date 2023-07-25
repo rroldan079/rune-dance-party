@@ -8,6 +8,7 @@ export const Controls = () => {
         });
     };
 
+    /* RENDERING OUT ONE BUTTON PER LIMB */
     return (
         <div className="flex w-full h-32 bg-black border-8 border-black rounded-3xl overflow-clip ">
             <button
