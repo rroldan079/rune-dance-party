@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
-import { GameState } from "../logic.ts";
+// import { GameState } from "../logic.ts";
 
-// Custom hook to get game state
-export const useGame = (): GameState => {
+/* CUSTOM HOOK SUBCRIBE TO GAME STATE CHANGES ON SERVER */
+export const useGame = (): any => {
     // State variable for game data
-    const [data, setData] = useState<any>();
+    const [gameData, setGameData] = useState<any>();
 
-    // Initialize Rune client on component mount
+    // INITIALIZE RUNE CLIENT ON COMPONENT MOUNT
     useEffect(() => {
         Rune.initClient({
-            // Update data state on game state change
-            onChange: (data) => {
-                setData(data);
+            /* UPDATE GAME STATE DATA ON GAME STATE CHANGE */
+            onChange: (gameData) => {
+                setGameData(gameData);
             },
         });
-    }, []); // Run once on mount
+    }, []); /* RUN ONCE ON MOUNT */
 
     // Return current game state
-    return data;
+    return gameData;
 };

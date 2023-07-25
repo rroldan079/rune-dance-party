@@ -1,40 +1,36 @@
-import React from "react";
-import { GameState } from "../logic";
+import { LimbEnum } from "../types/types";
 
-type ControlsProps = {
-    game?: GameState; // Replace 'any' with the actual type of your game state
-};
-
-export const Controls: React.FC<ControlsProps> = ({ game }) => {
-    const onClickHandler = (limb: any) => {
+export const Controls = () => {
+    const onClickHandler = (limb: LimbEnum) => {
+        /* TELLS SERVER TO UPDATE THE LIMB POSE FOR THE ACTIVATING PLAYER - SEE ACTIONS IN LOGIC.TS */
         Rune.actions.toggleLimb({
             limb: limb,
         });
     };
 
     return (
-        <div className="flex h-32 bg-black border-8 border-black rounded-3xl overflow-clip ">
+        <div className="flex w-full h-32 bg-black border-8 border-black rounded-3xl overflow-clip ">
             <button
-                className="h-full font-black transition-all rounded-none hover:opacity-90 bg-black/20 bg-ronchi"
-                onClick={() => onClickHandler("left arm")}
+                className="w-full h-full text-xs font-black transition-all rounded-none hover:opacity-90 bg-black/20 bg-ronchi"
+                onClick={() => onClickHandler(LimbEnum.LeftArm)}
             >
                 Left Arm
             </button>
             <button
-                className="h-full font-black transition-all rounded-none hover:opacity-90 bg-black/20 bg-willpower-orange"
-                onClick={() => onClickHandler("right arm")}
+                className="w-full h-full text-xs font-black transition-all rounded-none hover:opacity-90 bg-black/20 bg-willpower-orange"
+                onClick={() => onClickHandler(LimbEnum.RightArm)}
             >
                 Right Arm
             </button>
             <button
-                className="h-full font-black transition-all rounded-none hover:opacity-90 bg-black/20 bg-vivid-raspberry"
-                onClick={() => onClickHandler("left leg")}
+                className="w-full h-full text-xs font-black transition-all rounded-none hover:opacity-90 bg-black/20 bg-vivid-raspberry"
+                onClick={() => onClickHandler(LimbEnum.LeftLeg)}
             >
                 Left Leg
             </button>
             <button
-                className="h-full font-black transition-all rounded-none hover:opacity-90 bg-black/20 bg-blue-purple"
-                onClick={() => onClickHandler("right leg")}
+                className="w-full h-full text-xs font-black transition-all rounded-none hover:opacity-90 bg-black/20 bg-blue-purple"
+                onClick={() => onClickHandler(LimbEnum.RightLeg)}
             >
                 Right Leg
             </button>

@@ -1,11 +1,12 @@
 import React from "react";
+import { LimbEnum } from "../types/types";
 
 type CharacterProps = {
     player?: any;
 };
 
 type LimbProps = {
-    type: "left arm" | "right arm" | "left leg" | "right leg";
+    limb: LimbEnum;
     limbPoses?: {
         leftArm: number;
         rightArm: number;
@@ -20,38 +21,32 @@ type BodyProps = {
     player: any;
 };
 
-const Limb: React.FC<LimbProps> = ({ type, player }) => {
+const Limb: React.FC<LimbProps> = ({ limb, player }) => {
     let position;
-    console.log(player.limbs[type]);
 
-    switch (type) {
-        case "left arm":
+    switch (limb) {
+        case LimbEnum.LeftArm:
             position = "left-0 top-0";
-
             break;
-        case "right arm":
+        case LimbEnum.RightArm:
             position = "right-0 top-0";
             break;
-        case "left leg":
+        case LimbEnum.LeftLeg:
             position = "left-0 bottom-0";
             break;
-        case "right leg":
+        case LimbEnum.RightLeg:
             position = "right-0 bottom-0";
             break;
         default:
             position = "left-0 top-0";
             break;
     }
-    return <div className={`absolute font-black text-xs ${position}`}>{player.limbs[type]}</div>;
+    return <div className={`absolute font-black text-xs ${position}`}>{player.limbs[limb]}</div>;
 };
 
 const Body: React.FC<BodyProps> = ({ children, player }) => {
     return (
-        <div className="relative flex items-center justify-center p-8 bg-black/20 rounded-3xl">
-            {/* <img
-                src={player.avatarUrl}
-                className="w-full"
-            /> */}
+        <div className="relative flex items-center justify-center p-8 rounded-full bg-black/20">
             {React.Children.map(children, (child) => {
                 if (React.isValidElement(child)) {
                     return React.cloneElement(child, { player: player });
@@ -68,10 +63,10 @@ export const Character: React.FC<CharacterProps> = ({ player }) => {
             <span>{player.displayName}</span>
 
             <Body player={player}>
-                <Limb type="left arm" />
-                <Limb type="right arm" />
-                <Limb type="left leg" />
-                <Limb type="right leg" />
+                <Limb limb={LimbEnum.LeftArm} />
+                <Limb limb={LimbEnum.RightArm} />
+                <Limb limb={LimbEnum.LeftLeg} />
+                <Limb limb={LimbEnum.RightLeg} />
             </Body>
         </div>
     );
