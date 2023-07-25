@@ -11,7 +11,7 @@ export const Stage: React.FC = () => {
     const possibleColors: string[] = useMemo(() => ["red", "yellow", "lime", "blue", "purple", "magenta", "white"], []);
 
     useEffect(() => {
-        let newCards: string[] = [];
+        const newCards: string[] = [];
         for (let i = 0; i < 10; i++) {
             newCards.push(possibleColors[Math.floor(Math.random() * possibleColors.length)]);
         }
