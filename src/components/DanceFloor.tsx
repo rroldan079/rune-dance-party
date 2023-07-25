@@ -1,10 +1,5 @@
 import React from "react";
-import { GameState } from "../types/types";
-
-type DanceFloorProps = {
-    children?: React.ReactNode;
-    game?: GameState; // Replace 'any' with the actual type of your game state
-};
+import { DanceFloorProps } from "../types/types";
 
 export const DanceFloor: React.FC<DanceFloorProps> = ({ children }) => {
     return (

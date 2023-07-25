@@ -1,10 +1,10 @@
 import React from "react";
-
-type TimerProps = {
-    children?: React.ReactNode;
-    game: any; // Replace 'any' with the actual type of your game state
-};
+import { TimerProps } from "../types/types";
 
 export const Timer: React.FC<TimerProps> = ({ game }) => {
-    return <div className="absolute p-4 text-4xl font-bold text-black top-4 right-4">{game.newGame.remainingTime}</div>;
+    return (
+        <div className="absolute w-16 p-4 text-xl font-bold text-black border-4 aspect-square top-2 right-2 rounded-3xl">
+            {game.newGame.remainingTime}
+        </div>
+    );
 };
