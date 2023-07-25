@@ -19,6 +19,13 @@ function App() {
     return (
         game && (
             <main className="flex flex-col items-center justify-center w-full h-screen gap-4 p-8 bg-brilliant-azure ">
+                <button
+                    onClick={() => {
+                        Rune.actions.checkPlayerPoses();
+                        Rune.actions.updateCardStack();
+                    }}
+                    className="absolute w-4 bg-green-500 aspect-square"
+                ></button>
                 <Timer game={game} />
                 <Stage />
                 <DanceFloor>

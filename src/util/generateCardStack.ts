@@ -5,10 +5,11 @@ const getRandomNumber = (min: number, max: number): number => {
     return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-export const generateCardStack = (): Card[] => {
+/* GENERATES AN ARRAY OF CARD OBJECTS. THE CARD OBJECT CONISTS OF A COLOR AND LIMBS ARRAY */
+export const generateCardStack = (totalCards: number): Card[] => {
     const colors = ["red", "green", "yellow", "blue"];
     const stack: Card[] = [];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < totalCards; i++) {
         const randomIndex = Math.floor(Math.random() * colors.length);
         const limbs = Array(4)
             .fill(0)

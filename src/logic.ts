@@ -18,21 +18,8 @@ Rune.initLogic({
             count: 0,
             currentPlayerIndex: 0,
             remainingTime: 0,
-            cardStack: generateCardStack(),
+            cardStack: generateCardStack(10),
             winner: null,
-
-            // players: playerIds.reduce(
-            //     (acc, playerId, index) => ({
-            //         ...acc,
-            //         [playerId]: {
-            //             id: playerId,
-            //             limbs: [1, 1, 1, 1],
-            //             score: 0,
-            //             displayName: `Player ${index + 1}`,
-            //         },
-            //     }),
-            //     {}
-            // ),
             players: playerIds.map((playerId, index) => ({
                 key: playerId,
                 playerId: playerId,
@@ -43,10 +30,9 @@ Rune.initLogic({
         };
     },
     actions: {
-        /* AS A SECOND ARGUMENT, EACH ACTION GETS ACCESS TO AN OBJECT CONTAINING THE CURRENT GAME STATE, THE PLAYER ID OF THE PLAYER INITIATING THE ACTION, AND AN ARRAY OF ALL PLAYER IDS */
+        /* AS A SECOND ARGUMENT, EACH ACTION GETS ACCESS TO AN OBJECT CONTAINING THE CURRENT GAME STATE, THE PLAYER ID OF THE PLAYER INITIATING THE ACTION, AND AN ARRAY OF ALL PLAYER IDS. */
         updateCardStack: (_, { game }) => {
             /* A FUNCTION FOR REMOVING THE TOPMOST CARD FROM THE STACK */
-
             game.cardStack.shift();
         },
 
@@ -57,8 +43,36 @@ Rune.initLogic({
             const newPose = (currentPose % 3) + 1;
             game.players[playerIndex].limbs[limb] = newPose;
         },
-        // checkPlayerPoses: (payload, { game }) => {
-        // },
+        checkPlayerPoses: (_, { game }) => {
+            /* COMPARE LIMBS OF EACH PLAYER AGAINST FRONTMOST CARD IN CARDSTACK, THEN UPDATES SCORE PROPERTY FOR EACH PLAYER */
+            game.players.forEach((player: Player) => {
+                const frontmostCard = game.cardStack[0];
+                const playerLimbPoses = player.limbs;
+                const playerScore = player.score;
+
+                const score = playerLimbPoses.reduce((acc, limbPose, index) => {
+                    if (limbPose === frontmostCard.limbs[index]) {
+                        return acc + 1;
+                    } else {
+                        return acc;
+                    }
+                }, 0);
+
+                player.score = player.score + score;
+                // console.log(
+                //     "player:",
+                //     player.displayName,
+                //     "correct",
+                //     frontmostCard.limbs,
+                //     "pose",
+                //     playerLimbPoses,
+                //     "score",
+                //     score,
+                //     "Accumulated Score",
+                //     playerScore
+                // );
+            });
+        },
     },
     events: {
         playerJoined: () => {
