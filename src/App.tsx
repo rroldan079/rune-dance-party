@@ -11,21 +11,17 @@ function App() {
     const game = useGame();
 
     if (!game) {
-        return <div>Loading...</div>;
+        return;
     }
-
-    console.log(game.newGame);
-    /*  */
-    const playersArray = Object.values(game.newGame.players);
 
     return (
         <main className="flex flex-col items-center justify-center w-full h-screen gap-4 p-8 bg-brilliant-azure ">
             <Timer game={game} />
             <Stage />
             <DanceFloor>
-                {playersArray.map((player: any) => (
+                {game.newGame.players.map((player: Player) => (
                     <Character
-                        key={player.id}
+                        key={player.playerId}
                         player={player}
                     />
                 ))}

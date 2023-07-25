@@ -1,25 +1,5 @@
 import React from "react";
-import { LimbEnum } from "../types/types";
-
-type CharacterProps = {
-    player?: any;
-};
-
-type LimbProps = {
-    limb: LimbEnum;
-    limbPoses?: {
-        leftArm: number;
-        rightArm: number;
-        leftLeg: number;
-        rightLeg: number;
-    };
-    player?: any;
-};
-
-type BodyProps = {
-    children: React.ReactElement<LimbProps>[] | React.ReactElement<LimbProps>;
-    player: any;
-};
+import { LimbEnum, CharacterProps, BodyProps, LimbProps } from "../types/types";
 
 const Limb: React.FC<LimbProps> = ({ limb, player }) => {
     let position;
@@ -63,10 +43,22 @@ export const Character: React.FC<CharacterProps> = ({ player }) => {
             <span>{player.displayName}</span>
 
             <Body player={player}>
-                <Limb limb={LimbEnum.LeftArm} />
-                <Limb limb={LimbEnum.RightArm} />
-                <Limb limb={LimbEnum.LeftLeg} />
-                <Limb limb={LimbEnum.RightLeg} />
+                <Limb
+                    limb={LimbEnum.LeftArm}
+                    player={player}
+                />
+                <Limb
+                    limb={LimbEnum.RightArm}
+                    player={player}
+                />
+                <Limb
+                    limb={LimbEnum.LeftLeg}
+                    player={player}
+                />
+                <Limb
+                    limb={LimbEnum.RightLeg}
+                    player={player}
+                />
             </Body>
         </div>
     );
