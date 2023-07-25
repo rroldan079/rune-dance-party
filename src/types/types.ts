@@ -16,6 +16,11 @@ export type TimerProps = {
     game: any; // Replace 'any' with the actual type of your game state
 };
 
+export type StageProps = {
+    children?: React.ReactNode;
+    game: any;
+};
+
 export enum LimbPose {
     Straight = 1,
     BentUp = 2,

@@ -17,7 +17,7 @@ function App() {
     return (
         <main className="flex flex-col items-center justify-center w-full h-screen gap-4 p-8 bg-brilliant-azure ">
             <Timer game={game} />
-            <Stage />
+            <Stage game={game} />
             <DanceFloor>
                 {game.newGame.players.map((player: Player) => (
                     <Character
