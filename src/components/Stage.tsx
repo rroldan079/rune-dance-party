@@ -4,6 +4,8 @@ import { StageCard } from "./StageCard";
 import { StageProps, Card } from "../types/types"
 
 export const Stage: React.FC<StageProps> = ({ game }) => {
+    // TODO: Check the player poses when the card reaches its final form
+    // look into Intersection Observer API (tracks where an object is on the screen)
     const [stageCards, setStageCards] = useState<Card[]>(game.newGame.cardStack);
     const [activeCard, setActiveCard] = useState<Card>(game.newGame.cardStack[0]);
 
@@ -14,7 +16,7 @@ export const Stage: React.FC<StageProps> = ({ game }) => {
     const turnCard = () => {
         if (stageCards.length > 0) {
             console.log("turning card: " + game.newGame.cardStack[0].color);
-            Rune.actions.updateCardStack(game)
+            Rune.actions.updateCardStack()
             setActiveCard(game.newGame.cardStack[0])
             // console.log(game)
         }
