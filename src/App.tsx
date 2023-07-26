@@ -10,10 +10,12 @@ function App() {
     /* THIS IS THE GAME DATA FROM SERVER. PASS THIS TO COMPONENTS THAT NEED GAME STATE DATA, ETC */
     const game = useGame();
 
+    /* GUARD CLAUSE PREVENTS RENDERING OUT GAME UI IF GAME ISN'T READY */
     if (!game) {
         return;
     }
 
+    /* RENDERING OUT GAME UI IF THE GAME IS READY */
     return (
         <main className="flex flex-col items-center justify-center w-full h-screen gap-4 p-8 bg-brilliant-azure ">
             <Timer game={game} />

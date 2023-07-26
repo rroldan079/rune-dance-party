@@ -65,3 +65,12 @@ button:focus,
 button:focus-visible {
     outline: 0;
 }
+
+.stroke-text {
+    font-size: 32px; /* Set the font size as per your requirement */
+    color: white; /* Set the text color */
+    -webkit-text-stroke: 2px black; /* Stroke width and color */
+    -moz-text-stroke: 2px black; /* Stroke width and color */
+    -ms-text-stroke: 2px black; /* Stroke width and color */
+    text-stroke: 2px black; /* Stroke width and color */
+}
