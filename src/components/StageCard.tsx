@@ -4,6 +4,7 @@ type StageCardProps = {
   color: string;
   leftOffset?: string;
   z?: string;
+  active?: boolean;
   limbs?: number[];
 };
 
@@ -11,6 +12,7 @@ export const StageCard: React.FC<StageCardProps> = ({
   color,
   leftOffset,
   z,
+  active,
   limbs,
 }) => {
   const [colorNicer, setColorNicer] = useState<Record<string,string>>({
@@ -24,7 +26,7 @@ export const StageCard: React.FC<StageCardProps> = ({
     <>
       <div
         id="stage-card"
-        className= {`absolute w-10 h-14 border-4 border-black rounded-xl ${colorNicer[color]}`}
+        className= {`absolute w-10 h-14 border-4 ${active ? "border-white" : "border-black"} rounded-xl ${colorNicer[color]}`}
         style={{ left: leftOffset , zIndex: z, width: "20vw", height: "25vw" }}
       >
         <div className="bold">
