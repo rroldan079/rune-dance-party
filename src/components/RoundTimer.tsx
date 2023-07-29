@@ -28,7 +28,7 @@ export const RoundTimer: React.FC<RoundTimerProps> = ({ setRoundTimeUp }) => {
     <>
       <div className="w-full h-10 py-2">
         <div
-          className="h-full bg-white"
+          className="h-full bg-white transition-all rounded-xl"
           style={{ width: `${(progress%6 / 5) * 100}%` }} // Calculate the width based on the progress
         />
       </div>

@@ -6,6 +6,7 @@ import { RoundTimer } from "./RoundTimer";
 export const Stage: React.FC<StageProps> = ({ game }) => {
   // TODO: Check the player poses when the card reaches its final form
   // look into Intersection Observer API (tracks where an object is on the screen)
+  // look into framer.com (React animation effects) => { useScroll }
   const [stageCards, setStageCards] = useState<Card[]>(game.newGame.cardStack);
   const [roundTimeUp, setRoundTimeUp] = useState<boolean>(false)
   const [activeCard, setActiveCard] = useState<Card>();
@@ -17,6 +18,7 @@ export const Stage: React.FC<StageProps> = ({ game }) => {
   const turnCard = () => {
     if (stageCards.length > 0) {
       console.log("turning card: " + game.newGame.cardStack[0].color);
+      Rune.actions.checkPlayerPoses()
       Rune.actions.updateCardStack();
       setActiveCard(game.newGame.cardStack[0]);
       // console.log(game)
