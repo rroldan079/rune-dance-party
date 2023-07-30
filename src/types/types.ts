@@ -55,7 +55,7 @@ export interface GameState {
 }
 
 export type GameActions = {
-    gameOverSettings: () => void;
+    startGameOverProcess: () => void;
     updateCardStack: () => void;
     toggleLimb: (params: { limb: LimbEnum }) => void;
     checkPlayerPoses: (params: { index: number }) => void;

@@ -30,20 +30,21 @@ Rune.initLogic({
     };
   },
   actions: {
-    gameOverSettings: (_, { game }) => {
-      // DOES NOT WORK
-      const getScores = () =>
+    startGameOverProcess: (_, { game }) => {
+        // DOES NOT WORK (error: cannot read properties of undefined (reading 'randomSeed'))
+        const getScores = () =>
         Object.entries(game.players).reduce((acc, [id, player]) => {
-          acc[id] = player.score;
-          return acc;
+            acc[id] = player.score;
+            return acc;
         }, {} as Record<string, number>);
-      // Object.values(game.players).sort((a, b) => b.score - a.score);
-
+        // Object.values(game.players).sort((a, b) => b.score - a.score);
+        
       Rune.gameOver({
         players: getScores(),
         delayPopUp: true,
       });
     },
+    
     /* AS A SECOND ARGUMENT, EACH ACTION GETS ACCESS TO AN OBJECT CONTAINING THE CURRENT GAME STATE, THE PLAYER ID OF THE PLAYER INITIATING THE ACTION, AND AN ARRAY OF ALL PLAYER IDS. */
     updateCardStack: (_, { game }) => {
       /* A FUNCTION FOR REMOVING THE TOPMOST CARD FROM THE STACK */
@@ -103,6 +104,6 @@ Rune.initLogic({
     /* GAME OVER AFTER 60 SECONDS */
     const timeElapsed = Rune.gameTimeInSeconds();
     game.remainingTime = 60 - timeElapsed;
-    game.remainingTime === 0 && Rune.actions.gameOverSettings();
+    game.remainingTime === 0 && Rune.actions.startGameOverProcess();
   },
 });
