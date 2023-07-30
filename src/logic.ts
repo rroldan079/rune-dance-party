@@ -31,7 +31,7 @@ Rune.initLogic({
   },
   actions: {
     gameOverSettings: (_, { game }) => {
-      // if (isGameOver(game))
+      // DOES NOT WORK
       const getScores = () =>
         Object.entries(game.players).reduce((acc, [id, player]) => {
           acc[id] = player.score;
