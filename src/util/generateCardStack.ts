@@ -7,7 +7,7 @@ const getRandomNumber = (min: number, max: number): number => {
 
 /* GENERATES AN ARRAY OF CARD OBJECTS. THE CARD OBJECT CONISTS OF A COLOR AND LIMBS ARRAY */
 export const generateCardStack = (totalCards: number): Card[] => {
-    const colors = ["red", "green", "yellow", "blue"];
+    const colors = ["pink", "yellow", "orange", "purple"];
     const stack: Card[] = [];
     for (let i = 0; i < totalCards; i++) {
         const randomIndex = Math.floor(Math.random() * colors.length);

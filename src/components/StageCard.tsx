@@ -16,10 +16,10 @@ export const StageCard: React.FC<StageCardProps> = ({
   limbs,
 }) => {
   const [colorNicer, setColorNicer] = useState<Record<string,string>>({
-    'red': 'bg-vivid-raspberry',
+    'pink': 'bg-vivid-raspberry',
     'yellow': 'bg-ronchi',
-    'green': 'bg-willpower-orange',
-    'blue': 'bg-blue-purple',
+    'orange': 'bg-willpower-orange',
+    'purple': 'bg-blue-purple',
     }) 
   
   return (
