@@ -17,7 +17,7 @@ Rune.initLogic({
         return {
             count: 0,
             currentPlayerIndex: 0,
-            remainingTime: 0,
+            remainingTime: 60,
             cardStack: generateCardStack(10),
             winner: null,
             players: playerIds.map((playerId, index) => ({
@@ -43,15 +43,15 @@ Rune.initLogic({
             const newPose = (currentPose % 3) + 1;
             game.players[playerIndex].limbs[limb] = newPose;
         },
-        checkPlayerPoses: (_, { game }) => {
+        checkPlayerPoses: ({ index }, { game }) => {
             /* COMPARE LIMBS OF EACH PLAYER AGAINST FRONTMOST CARD IN CARDSTACK, THEN UPDATES SCORE PROPERTY FOR EACH PLAYER */
             game.players.forEach((player: Player) => {
-                const frontmostCard = game.cardStack[0];
+                const activeCard = game.cardStack[index];
                 const playerLimbPoses = player.limbs;
-                const playerScore = player.score;
+                // const playerScore = player.score;
 
-                const score = playerLimbPoses.reduce((acc, limbPose, index) => {
-                    if (limbPose === frontmostCard.limbs[index]) {
+                const score = playerLimbPoses.reduce((acc, limbPose, i) => {
+                    if (limbPose === activeCard.limbs[i]) {
                         return acc + 1;
                     } else {
                         return acc;
@@ -82,11 +82,11 @@ Rune.initLogic({
             // Handle player left
         },
     },
-    // update: ({ game }) => {
-    //     /* THIS UPDATE FUNCTION RUNS EVERY 1 SECOND */
-    //     /* GAME OVER AFTER 60 SECONDS */
-    //     const timeElapsed = Rune.gameTimeInSeconds();
-    //     game.remainingTime = 60 - timeElapsed;
-    //     game.remainingTime === 0 && Rune.gameOver();
-    // },
+    update: ({ game }) => {
+        /* THIS UPDATE FUNCTION RUNS EVERY 1 SECOND */
+        /* GAME OVER AFTER 60 SECONDS */
+        const timeElapsed = Rune.gameTimeInSeconds();
+        game.remainingTime = 60 - timeElapsed;
+        game.remainingTime === 0 && Rune.gameOver();
+    },
 });

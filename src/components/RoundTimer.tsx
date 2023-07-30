@@ -1,35 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
+import { RoundTimerProps } from "../types/types";
 
-type RoundTimerProps = {
-    setRoundTimeUp:React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-export const RoundTimer: React.FC<RoundTimerProps> = ({ setRoundTimeUp }) => {
-  const [progress, setProgress] = useState(0);
+export const RoundTimer: React.FC<RoundTimerProps> = ({
+  game,
+  scoreAndTurnCard,
+  activeCardIndex
+}) => {
+  const INTERVAL = 6 // THIS IS THE AMOUNT OF TIME IN A ROUND, IN SECONDS
+  const gameTimerProgress = (60 - game.newGame.remainingTime) % INTERVAL;
+  const [progress, setProgress] = useState<number>(gameTimerProgress);
 
   useEffect(() => {
-    /////////   PLACEHOLDER   ///////////////
-    // This is just a placeholder to start the timer
-    const interval = setInterval(() => {
-      setProgress((prevProgress) => prevProgress + 1);
-    }, 1000); // Increment progress every second
-    return () => clearInterval(interval);
-  }, []);
+    // ENSURES THE ROUND TIMER STAYS IN SYNC WITH GAME TIMER
+    setProgress(gameTimerProgress);
 
-  useEffect(()=> {
-    let progressPercent = (progress%6 / 5) * 100
-    if (progressPercent == 100){
-        setRoundTimeUp(true)
+    // INCREMENT PROGRESS BAR EVERY SECOND
+    const interval = setInterval(() => {
+      setProgress((prevProgress) => (prevProgress + 1) % INTERVAL);
+    }, 1000); // Increment progress every second
+
+    return () => clearInterval(interval);
+  }, [gameTimerProgress, progress]);
+
+  useEffect(() => {
+    // IF THE ROUND TIMER BAR IS STARTING OVER (and it's not just because the timer was at 0)
+    // THEN SCORE & TURN THE NEXT CARD OVER
+    if (progress === 0 && game.newGame.remainingTime < 59) {
+      Rune.actions.checkPlayerPoses({ index: activeCardIndex });
+      scoreAndTurnCard();
     }
-    // setRoundTimeUp(false)
-  }, [progress])
+  }, [progress]);
 
   return (
     <>
       <div className="w-full h-10 py-2">
         <div
           className="h-full bg-white transition-all rounded-xl"
-          style={{ width: `${(progress%6 / 5) * 100}%` }} // Calculate the width based on the progress
+          style={{ width: `${((progress % INTERVAL) / (INTERVAL-1)) * 100}%` }} // Calculate the width based on the progress
         />
       </div>
     </>

@@ -4,34 +4,29 @@ import { StageProps, Card } from "../types/types";
 import { RoundTimer } from "./RoundTimer";
 
 export const Stage: React.FC<StageProps> = ({ game }) => {
-  // TODO: Check the player poses when the card reaches its final form
-  // look into Intersection Observer API (tracks where an object is on the screen)
-  // look into framer.com (React animation effects) => { useScroll }
-  const [stageCards, setStageCards] = useState<Card[]>(game.newGame.cardStack);
-  const [roundTimeUp, setRoundTimeUp] = useState<boolean>(false)
-  const [activeCard, setActiveCard] = useState<Card>();
+  const [stageCards, setStageCards] = useState<Card[]>(
+    game.newGame.cardStack.slice(1)
+  );
+  const [activeCard, setActiveCard] = useState<Card>(game.newGame.cardStack[0]);
+  const [activeCardIndex, setActiveCardIndex] = useState<number>(0);
 
-  useEffect(() => {
-    console.log(game);
-  }, []);
-
-  const turnCard = () => {
+  const scoreAndTurnCard = () => {
     if (stageCards.length > 0) {
-      console.log("turning card: " + game.newGame.cardStack[0].color);
-      Rune.actions.checkPlayerPoses()
-      Rune.actions.updateCardStack();
-      setActiveCard(game.newGame.cardStack[0]);
-      // console.log(game)
+      // WHEN THE ROUND ENDS, SCORE THE PREVIOUS CARD'S POSES
+      // Rune.actions.checkPlayerPoses({ index: activeCardIndex });
+      // THEN TURN TO THE NEW CARD (this triggers the useEffect below)
+      setActiveCardIndex((prev) => prev + 1);
     }
   };
 
   useEffect(() => {
-    if (roundTimeUp === true) {
-        turnCard()
-        console.log("trying to flip card")
-        // setRoundTimeUp(false)
+    // TRIGGERED BY THE ACTIVE CARD INDEX CHANGING (skips initial render tho)
+    if (activeCardIndex > 0) {
+      setActiveCard(stageCards[0]);
+      setStageCards((prev) => prev.slice(1));
+      // console.log("after active card removed: " + stageCards.length);
     }
-  },[roundTimeUp])
+  }, [activeCardIndex]);
 
   return (
     <div
@@ -41,13 +36,17 @@ export const Stage: React.FC<StageProps> = ({ game }) => {
       <div id="cards" className="flex">
         <div
           id="active-card"
-          className={`mr-14 w-10 h-14 ${
+          className={`mr-10 w-10 h-14 ${
             activeCard || "border-4 border-white border-dashed rounded-xl"
           }`}
           style={{ width: "20vw", height: "25vw" }}
         >
           {activeCard ? (
-            <StageCard active={true} color={activeCard.color} limbs={activeCard.limbs} />
+            <StageCard
+              active={true}
+              color={activeCard.color}
+              limbs={activeCard.limbs}
+            />
           ) : (
             <> </>
           )}
@@ -55,11 +54,8 @@ export const Stage: React.FC<StageProps> = ({ game }) => {
         <div
           id="deck"
           className="relative flex" // ... like me
-          onClick={() => {
-            turnCard();
-          }}
         >
-          {game.newGame.cardStack.map((cardItem: Card, i: number) => (
+          {stageCards.map((cardItem: Card, i: number) => (
             <div key={`stage-cards-${i}`}>
               <StageCard
                 color={cardItem.color}
@@ -72,7 +68,7 @@ export const Stage: React.FC<StageProps> = ({ game }) => {
         </div>
       </div>
       <div id="round-timer">
-        <RoundTimer setRoundTimeUp={setRoundTimeUp} />
+        <RoundTimer game={game} scoreAndTurnCard={scoreAndTurnCard} activeCardIndex={activeCardIndex} />
       </div>
     </div>
   );
