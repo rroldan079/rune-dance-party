@@ -55,7 +55,7 @@ export interface GameState {
 }
 
 export type GameActions = {
-    startGameOverProcess: () => void;
+    testFunction: () => void;
     updateCardStack: () => void;
     toggleLimb: (params: { limb: LimbEnum }) => void;
     checkPlayerPoses: (params: { index: number }) => void;
@@ -63,6 +63,7 @@ export type GameActions = {
 
 export type CharacterProps = {
     player: Player;
+    playerName: string;
 };
 
 export type LimbProps = {

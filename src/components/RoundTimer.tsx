@@ -7,13 +7,13 @@ export const RoundTimer: React.FC<RoundTimerProps> = ({
   activeCardIndex,
 }) => {
   const INTERVAL = 6; // THIS IS THE AMOUNT OF TIME IN A ROUND, IN SECONDS
-  const gameTimerProgress = (60 - game.newGame.remainingTime);
+  const gameTimerProgress = 60 - game.newGame.remainingTime;
   const [progress, setProgress] = useState<number>(gameTimerProgress);
   const [roundNumber, setRoundNumber] = useState<number>(1);
 
-  useEffect(()=> {
-    console.log(game)
-  }, [])
+  // useEffect(() => {
+  //   console.log(game);
+  // }, []);
 
   useEffect(() => {
     // ENSURES THE ROUND TIMER STAYS IN SYNC WITH GAME TIMER
@@ -21,9 +21,9 @@ export const RoundTimer: React.FC<RoundTimerProps> = ({
 
     // INCREMENT PROGRESS BAR EVERY SECOND
     const interval = setInterval(() => {
-      setProgress((prevProgress) => (prevProgress + 1));
+      setProgress((prevProgress) => prevProgress + 1);
       if (progress > 59) {
-        clearInterval(interval)
+        clearInterval(interval);
       }
     }, 1000); // Increment progress every second
     return () => clearInterval(interval);
@@ -32,11 +32,7 @@ export const RoundTimer: React.FC<RoundTimerProps> = ({
   useEffect(() => {
     // IF THE ROUND TIMER BAR IS STARTING OVER
     // THEN SCORE & TURN THE NEXT CARD OVER
-    if (
-      progress % INTERVAL === 0 &&
-      progress < 59 && 
-      progress > 0
-    ) {
+    if (progress % INTERVAL === 0 && progress < 59 && progress > 0) {
       Rune.actions.checkPlayerPoses({ index: activeCardIndex });
       scoreAndTurnCard();
       setRoundNumber((prev) => prev + 1);
@@ -58,7 +54,8 @@ export const RoundTimer: React.FC<RoundTimerProps> = ({
           style={{
             width: `${((progress % INTERVAL) / (INTERVAL - 1)) * 100}%`,
           }} // Calculate the width based on the progress
-        >{progress}</div>
+        />
+        {/* >{progress}</div> */}
       </div>
     </>
   );

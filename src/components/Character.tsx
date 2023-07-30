@@ -38,10 +38,10 @@ const Body: React.FC<BodyProps> = ({ children, player }) => {
     );
 };
 
-export const Character: React.FC<CharacterProps> = ({ player }) => {
+export const Character: React.FC<CharacterProps> = ({ playerName, player }) => {
     return (
         <div className="relative flex flex-col items-center w-full p-4 bg-black/10 rounded-3xl aspect-square">
-            <span>{player.displayName}</span>
+            <span>{playerName}</span>
             <span className="absolute top-0 right-0 font-black stroke-text">{player.score}</span>
             <Body player={player}>
                 <Limb
