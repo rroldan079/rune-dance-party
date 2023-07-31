@@ -10,7 +10,7 @@ export const Stage: React.FC<StageProps> = ({ game }) => {
   const [activeCard, setActiveCard] = useState<Card>(game.newGame.cardStack[0]);
   const [activeCardIndex, setActiveCardIndex] = useState<number>(0);
 
-  const scoreAndTurnCard = () => {
+  const turnCard = () => {
     if (stageCards.length > 0) {
       // WHEN THE ROUND ENDS, SCORE THE PREVIOUS CARD'S POSES
       // Rune.actions.checkPlayerPoses({ index: activeCardIndex });
@@ -68,7 +68,7 @@ export const Stage: React.FC<StageProps> = ({ game }) => {
         </div>
       </div>
       <div id="round-timer">
-        <RoundTimer game={game} scoreAndTurnCard={scoreAndTurnCard} activeCardIndex={activeCardIndex} />
+        <RoundTimer game={game} turnCard={turnCard} activeCardIndex={activeCardIndex} />
       </div>
     </div>
   );

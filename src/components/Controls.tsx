@@ -1,7 +1,10 @@
 import { LimbEnum } from "../types/types";
+import interfaceClick from "../assets/interface click.wav"
 
 export const Controls = () => {
     const onClickHandler = (limb: LimbEnum) => {
+        // does this activate when anyone clicks their buttons or only when player clicks their own
+        new Audio(interfaceClick).play()
         /* TELLS SERVER TO UPDATE THE LIMB POSE FOR THE ACTIVATING PLAYER - SEE ACTIONS IN LOGIC.TS */
         Rune.actions.toggleLimb({
             limb: limb,

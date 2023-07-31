@@ -22,7 +22,7 @@ export type StageProps = {
 };
 
 export type RoundTimerProps = {
-    scoreAndTurnCard:Function;
+    turnCard: Function;
     game: any;
     activeCardIndex: number;
 }
@@ -55,7 +55,6 @@ export interface GameState {
 }
 
 export type GameActions = {
-    testFunction: () => void;
     updateCardStack: () => void;
     toggleLimb: (params: { limb: LimbEnum }) => void;
     checkPlayerPoses: (params: { index: number }) => void;
