@@ -1,6 +1,7 @@
 import type { RuneClient } from "rune-games-sdk/multiplayer";
 import type { GameState, GameActions, Player } from "./types/types";
 import { generateCardStack } from "./util/generateCardStack.ts";
+import gameOverSound from './assets/game over.wav'
 
 declare global {
   const Rune: RuneClient<GameState, GameActions>;
@@ -30,11 +31,6 @@ Rune.initLogic({
     };
   },
   actions: {
-    testFunction: (_, { game }) => {
-      console.log(game.players[0].score)
-      console.log(game.players[1])
-    },
-
     /* AS A SECOND ARGUMENT, EACH ACTION GETS ACCESS TO AN OBJECT CONTAINING THE CURRENT GAME STATE, THE PLAYER ID OF THE PLAYER INITIATING THE ACTION, AND AN ARRAY OF ALL PLAYER IDS. */
     updateCardStack: (_, { game }) => {
       /* A FUNCTION FOR REMOVING THE TOPMOST CARD FROM THE STACK */
@@ -50,6 +46,7 @@ Rune.initLogic({
       const newPose = (currentPose % 3) + 1;
       game.players[playerIndex].limbs[limb] = newPose;
     },
+
     checkPlayerPoses: ({ index }, { game }) => {
       /* COMPARE LIMBS OF EACH PLAYER AGAINST FRONTMOST CARD IN CARDSTACK, THEN UPDATES SCORE PROPERTY FOR EACH PLAYER */
       game.players.forEach((player: Player) => {
@@ -95,6 +92,7 @@ Rune.initLogic({
     const timeElapsed = Rune.gameTimeInSeconds();
     game.remainingTime = 60 - timeElapsed;
     if (game.remainingTime === 0) {
+      new Audio(gameOverSound).play()
       Rune.gameOver({
         players: {
           [game.players[0].playerId]: game.players[0].score,

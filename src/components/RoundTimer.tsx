@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { RoundTimerProps } from "../types/types";
+import pageTurn from "../assets/page turn.wav";
 
 export const RoundTimer: React.FC<RoundTimerProps> = ({
   game,
-  scoreAndTurnCard,
+  turnCard,
   activeCardIndex,
 }) => {
   const INTERVAL = 6; // THIS IS THE AMOUNT OF TIME IN A ROUND, IN SECONDS
@@ -33,9 +34,11 @@ export const RoundTimer: React.FC<RoundTimerProps> = ({
     // IF THE ROUND TIMER BAR IS STARTING OVER
     // THEN SCORE & TURN THE NEXT CARD OVER
     if (progress % INTERVAL === 0 && progress < 59 && progress > 0) {
+      // new Audio(transition).play()
       Rune.actions.checkPlayerPoses({ index: activeCardIndex });
-      scoreAndTurnCard();
+      turnCard();
       setRoundNumber((prev) => prev + 1);
+      new Audio(pageTurn).play()
     }
   }, [progress]);
 
