@@ -24,6 +24,7 @@ function App() {
                 {game.newGame.players.map((player: Player) => (
                     <Character
                         key={player.playerId}
+                        playerName={game.players[player.playerId].displayName}
                         player={player}
                     />
                 ))}

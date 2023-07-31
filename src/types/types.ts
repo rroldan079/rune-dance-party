@@ -21,6 +21,12 @@ export type StageProps = {
     game: any;
 };
 
+export type RoundTimerProps = {
+    scoreAndTurnCard:Function;
+    game: any;
+    activeCardIndex: number;
+}
+
 export enum LimbPose {
     Straight = 1,
     BentUp = 2,
@@ -49,13 +55,15 @@ export interface GameState {
 }
 
 export type GameActions = {
+    testFunction: () => void;
     updateCardStack: () => void;
     toggleLimb: (params: { limb: LimbEnum }) => void;
-    checkPlayerPoses: () => void;
+    checkPlayerPoses: (params: { index: number }) => void;
 };
 
 export type CharacterProps = {
     player: Player;
+    playerName: string;
 };
 
 export type LimbProps = {
