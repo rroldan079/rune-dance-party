@@ -47,35 +47,24 @@ Rune.initLogic({
       game.players[playerIndex].limbs[limb] = newPose;
     },
 
-    checkPlayerPoses: ({ index }, { game }) => {
+    checkPlayerPoses: ({ index }, { game, playerId: initiatingPlayerId }) => {
       /* COMPARE LIMBS OF EACH PLAYER AGAINST FRONTMOST CARD IN CARDSTACK, THEN UPDATES SCORE PROPERTY FOR EACH PLAYER */
-      game.players.forEach((player: Player) => {
-        const activeCard = game.cardStack[index];
-        const playerLimbPoses = player.limbs;
-        // const playerScore = player.score;
+      const playerIndex = game.players.findIndex(
+        (player: Player) => player.playerId === initiatingPlayerId
+      );
+      const player = game.players[playerIndex]
+      const activeCard = game.cardStack[index]
+      const playerLimbPoses = player.limbs;
 
-        const score = playerLimbPoses.reduce((acc, limbPose, i) => {
-          if (limbPose === activeCard.limbs[i]) {
-            return acc + 1;
-          } else {
-            return acc;
-          }
-        }, 0);
+      const score = playerLimbPoses.reduce((acc, limbPose, i) => {
+        if (limbPose === activeCard.limbs[i]) {
+          return acc + 1;
+        } else {
+          return acc;
+        }
+      }, 0);
 
-        player.score = player.score + score;
-        // console.log(
-        //     "player:",
-        //     player.displayName,
-        //     "correct",
-        //     frontmostCard.limbs,
-        //     "pose",
-        //     playerLimbPoses,
-        //     "score",
-        //     score,
-        //     "Accumulated Score",
-        //     playerScore
-        // );
-      });
+      player.score = player.score + score;
     },
   },
   events: {
