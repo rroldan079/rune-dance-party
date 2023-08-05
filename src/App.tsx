@@ -5,7 +5,7 @@ import { Controls } from "./components/Controls.tsx";
 import { useGame } from "./hooks/useGame.ts";
 import type { Player } from "./types/types.ts";
 import { Timer } from "./components/Timer.tsx";
-import {ControlButtons} from "./components/Button";
+import {ControlButtons} from "./components/Button.tsx";
 
 function App() {
     /* THIS IS THE GAME DATA FROM SERVER. PASS THIS TO COMPONENTS THAT NEED GAME STATE DATA, ETC */
